@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     var tempPercent: Double = 0.0
     var tempRes: Double = 0.0
     var stopRuinMyApp = true
+    var stopRuinMyAppDotaStyle = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -58,44 +59,44 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
 
 
-    clickList.add(MediaPlayer.create(this, R.raw.switch1))
-    clickList.add(MediaPlayer.create(this, R.raw.switch2))
-    clickList.add(MediaPlayer.create(this, R.raw.switch3))
-    clickList.add(MediaPlayer.create(this, R.raw.switch4))
-    clickList.add(MediaPlayer.create(this, R.raw.switch5))
-    clickList.add(MediaPlayer.create(this, R.raw.switch6))
-    clickList.add(MediaPlayer.create(this, R.raw.switch7))
-    clickList.add(MediaPlayer.create(this, R.raw.switch8))
-    clickList.add(MediaPlayer.create(this, R.raw.switch9))
-    clickList.add(MediaPlayer.create(this, R.raw.switch10))
-    clickList.add(MediaPlayer.create(this, R.raw.switch11))
-    clickList.add(MediaPlayer.create(this, R.raw.switch12))
-    clickList.add(MediaPlayer.create(this, R.raw.switch13))
-    clickList.add(MediaPlayer.create(this, R.raw.switch14))
-    clickList.add(MediaPlayer.create(this, R.raw.switch15))
-    clickList.add(MediaPlayer.create(this, R.raw.switch16))
-    clickList.add(MediaPlayer.create(this, R.raw.switch17))
-    clickList.add(MediaPlayer.create(this, R.raw.switch18))
-    clickList.add(MediaPlayer.create(this, R.raw.switch19))
-    clickList.add(MediaPlayer.create(this, R.raw.switch20))
-    clickList.add(MediaPlayer.create(this, R.raw.switch21))
-    clickList.add(MediaPlayer.create(this, R.raw.switch22))
-    clickList.add(MediaPlayer.create(this, R.raw.switch23))
-    clickList.add(MediaPlayer.create(this, R.raw.switch24))
-    clickList.add(MediaPlayer.create(this, R.raw.switch25))
-    clickList.add(MediaPlayer.create(this, R.raw.switch26))
-    clickList.add(MediaPlayer.create(this, R.raw.switch27))
-    clickList.add(MediaPlayer.create(this, R.raw.switch28))
-    clickList.add(MediaPlayer.create(this, R.raw.switch29))
-    clickList.add(MediaPlayer.create(this, R.raw.switch30))
-    clickList.add(MediaPlayer.create(this, R.raw.switch31))
-    clickList.add(MediaPlayer.create(this, R.raw.switch32))
-    clickList.add(MediaPlayer.create(this, R.raw.switch33))
-    clickList.add(MediaPlayer.create(this, R.raw.switch34))
-    clickList.add(MediaPlayer.create(this, R.raw.switch35))
-    clickList.add(MediaPlayer.create(this, R.raw.switch36))
-    clickList.add(MediaPlayer.create(this, R.raw.switch37))
-    clickList.add(MediaPlayer.create(this, R.raw.switch38))
+        clickList.add(MediaPlayer.create(this, R.raw.switch1))
+        clickList.add(MediaPlayer.create(this, R.raw.switch2))
+        clickList.add(MediaPlayer.create(this, R.raw.switch3))
+        clickList.add(MediaPlayer.create(this, R.raw.switch4))
+        clickList.add(MediaPlayer.create(this, R.raw.switch5))
+        clickList.add(MediaPlayer.create(this, R.raw.switch6))
+        clickList.add(MediaPlayer.create(this, R.raw.switch7))
+        clickList.add(MediaPlayer.create(this, R.raw.switch8))
+        clickList.add(MediaPlayer.create(this, R.raw.switch9))
+        clickList.add(MediaPlayer.create(this, R.raw.switch10))
+        clickList.add(MediaPlayer.create(this, R.raw.switch11))
+        clickList.add(MediaPlayer.create(this, R.raw.switch12))
+        clickList.add(MediaPlayer.create(this, R.raw.switch13))
+        clickList.add(MediaPlayer.create(this, R.raw.switch14))
+        clickList.add(MediaPlayer.create(this, R.raw.switch15))
+        clickList.add(MediaPlayer.create(this, R.raw.switch16))
+        clickList.add(MediaPlayer.create(this, R.raw.switch17))
+        clickList.add(MediaPlayer.create(this, R.raw.switch18))
+        clickList.add(MediaPlayer.create(this, R.raw.switch19))
+        clickList.add(MediaPlayer.create(this, R.raw.switch20))
+        clickList.add(MediaPlayer.create(this, R.raw.switch21))
+        clickList.add(MediaPlayer.create(this, R.raw.switch22))
+        clickList.add(MediaPlayer.create(this, R.raw.switch23))
+        clickList.add(MediaPlayer.create(this, R.raw.switch24))
+        clickList.add(MediaPlayer.create(this, R.raw.switch25))
+        clickList.add(MediaPlayer.create(this, R.raw.switch26))
+        clickList.add(MediaPlayer.create(this, R.raw.switch27))
+        clickList.add(MediaPlayer.create(this, R.raw.switch28))
+        clickList.add(MediaPlayer.create(this, R.raw.switch29))
+        clickList.add(MediaPlayer.create(this, R.raw.switch30))
+        clickList.add(MediaPlayer.create(this, R.raw.switch31))
+        clickList.add(MediaPlayer.create(this, R.raw.switch32))
+        clickList.add(MediaPlayer.create(this, R.raw.switch33))
+        clickList.add(MediaPlayer.create(this, R.raw.switch34))
+        clickList.add(MediaPlayer.create(this, R.raw.switch35))
+        clickList.add(MediaPlayer.create(this, R.raw.switch36))
+        clickList.add(MediaPlayer.create(this, R.raw.switch37))
+        clickList.add(MediaPlayer.create(this, R.raw.switch38))
 
 
     }
@@ -119,13 +120,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 result_sum = ""
                 if (tempSum != 0.0) {
                     tempRes = tempSum + tempRes
-
+                    tempRes = tempRes * 1000
+                    val result = Math.round(tempRes).toInt()
+                    tempRes = result.toDouble() / 1000
                 } else if (tempMunis != 0.0) {
                     tempRes = tempMunis - tempRes
-
+                    tempRes = tempRes * 1000
+                    val result = Math.round(tempRes).toInt()
+                    tempRes = result.toDouble() / 1000
                 } else if (tempMul != 0.0) {
                     tempRes = tempMul * tempRes
-
+                    tempRes = tempRes * 1000
+                    val result = Math.round(tempRes).toInt()
+                    tempRes = result.toDouble() / 1000
                 } else if (tempPercent != 0.0) {
                     tempRes = (tempPercent / 100) * tempRes
                     tempRes = tempRes * 1000
@@ -155,9 +162,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 tempDiv = 0.0
                 top_ressum.text = ""
                 stopRuinMyApp = true
+                stopRuinMyAppDotaStyle = true
             }
             mul -> {
                 clickList.random().start()
+                stopRuinMyAppDotaStyle = true
                 if (stopRuinMyApp) {
                     if (tempRes.toInt() != 0 || tempRes != 0.0) {
                         tempMul = tempRes
@@ -196,6 +205,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
             plus -> {
+                stopRuinMyAppDotaStyle = true
                 clickList.random().start()
                 if (stopRuinMyApp) {
                     if (tempRes != 0.0) {
@@ -237,10 +247,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
             dota -> {
                 clickList.random().start()
-                if (stopRuinMyApp) {
+                if (stopRuinMyAppDotaStyle) {
                     if (!result_sum.isEmpty()) {
                         result_sum += "."
-                        stopRuinMyApp = false
+                        stopRuinMyAppDotaStyle = false
                     }
                     result_panel.text = result_sum
                 }
@@ -274,7 +284,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             one -> {
-clickList.random().start()
+                clickList.random().start()
                 result_sum += "1"
                 result_panel.text = result_sum
             }
