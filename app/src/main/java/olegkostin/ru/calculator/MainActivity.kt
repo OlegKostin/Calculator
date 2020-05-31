@@ -2,14 +2,17 @@ package olegkostin.ru.calculator
 
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.view.ContextThemeWrapper
+import android.view.MenuItem
 import android.view.View
+import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
+class MainActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
-
+    lateinit var popUp: PopupMenu
     val clickList = mutableListOf<MediaPlayer>()
     var result_sum = ""
     var tempSum: Double = 0.0
@@ -20,10 +23,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     var tempRes: Double = 0.0
     var stopRuinMyApp = true
     var stopRuinMyAppDotaStyle = true
+    var isZeroPre = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+var wrapper = ContextThemeWrapper(this, R.style.popup)
+
+        popUp = PopupMenu(wrapper, findViewById(R.id.result_panel))
+        popUp.inflate(R.menu.popup)
+       popUp.setOnMenuItemClickListener(this)
         val delete = findViewById<View>(R.id.delete)
         delete.setOnClickListener(this)
 
@@ -56,7 +66,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         dota.setOnClickListener(this)
         backspace.setOnClickListener(this)
         percent.setOnClickListener(this)
-
+        result_panel.setOnClickListener(this)
 
 
         clickList.add(MediaPlayer.create(this, R.raw.switch1))
@@ -103,6 +113,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v) {
+            result_panel -> popUp.show()
             delete -> {
                 clickList.random().start()
                 tempRes = 0.0
@@ -112,6 +123,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 tempSum = 0.0
                 tempMul = 0.0
                 tempDiv = 0.0
+
+                stopRuinMyApp = true
+                stopRuinMyAppDotaStyle = true
+
             }
             result -> {
                 clickList.random().start()
@@ -139,7 +154,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     val result = Math.round(tempRes).toInt()
                     tempRes = result.toDouble() / 1000
                 } else if (tempDiv != 0.0) {
-                    tempRes = tempDiv.div(tempRes)
+                    try {
+                        tempRes = tempDiv.div(tempRes)
+                    } catch (e: Exception) {
+                        Snackbar.make(
+                            this.findViewById(R.id.coor),
+                            "Нельзя Делить на ноль!!1111",
+                            Snackbar.LENGTH_LONG
+                        ).show();
+                    }
 
                     tempRes = tempRes * 1000
                     val result = Math.round(tempRes).toInt()
@@ -163,86 +186,96 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 top_ressum.text = ""
                 stopRuinMyApp = true
                 stopRuinMyAppDotaStyle = true
+
             }
             mul -> {
                 clickList.random().start()
-                stopRuinMyAppDotaStyle = true
-                if (stopRuinMyApp) {
-                    if (tempRes.toInt() != 0 || tempRes != 0.0) {
-                        tempMul = tempRes
-                        top_ressum.text = tempRes.toString()
-                        tempRes = 0.0
-                    } else {
-                        tempMul = result_sum.toDouble()
-                        top_ressum.text = result_sum
-                    }
-                    tempMunis = 0.0
-                    tempSum = 0.0
-                    tempDiv = 0.0
+                if (!result_sum.isEmpty()) {
+                    stopRuinMyAppDotaStyle = true
+                    if (stopRuinMyApp) {
+                        if (tempRes.toInt() != 0 || tempRes != 0.0) {
+                            tempMul = tempRes
+                            top_ressum.text = tempRes.toString()
+                            tempRes = 0.0
+                        } else {
+                            tempMul = result_sum.toDouble()
+                            top_ressum.text = "$result_sum *"
+                        }
+                        tempMunis = 0.0
+                        tempSum = 0.0
+                        tempDiv = 0.0
 
-                    result_sum = ""
-                    stopRuinMyApp = false
+                        result_sum = ""
+                        stopRuinMyApp = false
+                    }
                 }
             }
 
             div -> {
-                clickList.random().start()
-                if (stopRuinMyApp) {
-                    if (tempRes.toInt() != 0 || tempRes != 0.0) {
-                        tempDiv = tempRes
-                        top_ressum.text = tempRes.toString()
-                        tempRes = 0.0
-                    } else {
-                        tempDiv = result_sum.toDouble()
-                        top_ressum.text = result_sum
-                    }
-                    tempMunis = 0.0
-                    tempSum = 0.0
-                    tempMul = 0.0
 
-                    result_sum = ""
-                    stopRuinMyApp = false
+                clickList.random().start()
+                if (!result_sum.isEmpty()) {
+                    if (stopRuinMyApp) {
+                        if (tempRes.toInt() != 0 || tempRes != 0.0) {
+                            tempDiv = tempRes
+                            top_ressum.text = tempRes.toString()
+                            tempRes = 0.0
+                        } else {
+                            tempDiv = result_sum.toDouble()
+                            top_ressum.text = "$result_sum /"
+                        }
+                        tempMunis = 0.0
+                        tempSum = 0.0
+                        tempMul = 0.0
+
+                        result_sum = ""
+                        stopRuinMyApp = false
+                    }
                 }
             }
             plus -> {
                 stopRuinMyAppDotaStyle = true
                 clickList.random().start()
-                if (stopRuinMyApp) {
-                    if (tempRes != 0.0) {
-                        tempSum = tempRes
-                        top_ressum.text = tempRes.toString()
-                        tempRes = 0.0
-                    } else {
-                        tempSum = result_sum.toDouble()
-                        top_ressum.text = result_sum
+                if (!result_sum.isEmpty()) {
+                    if (stopRuinMyApp) {
+                        if (tempRes != 0.0) {
+                            tempSum = tempRes
+                            top_ressum.text = tempRes.toString()
+                            tempRes = 0.0
+                        } else {
+                            tempSum = result_sum.toDouble()
+                            top_ressum.text = "$result_sum +"
+                        }
+
+                        tempMunis = 0.0
+                        tempMul = 0.0
+                        tempDiv = 0.0
+
+                        result_sum = ""
+                        stopRuinMyApp = false
                     }
-
-                    tempMunis = 0.0
-                    tempMul = 0.0
-                    tempDiv = 0.0
-
-                    result_sum = ""
-                    stopRuinMyApp = false
                 }
             }
             minus -> {
                 clickList.random().start()
-                if (stopRuinMyApp) {
-                    if (tempRes.toInt() != 0 || tempRes != 0.0) {
-                        tempMunis = tempRes
-                        top_ressum.text = tempRes.toString()
-                        tempRes = 0.0
-                    } else {
-                        tempMunis = result_sum.toDouble()
-                        top_ressum.text = result_sum
+                if (!result_sum.isEmpty()) {
+                    if (stopRuinMyApp) {
+                        if (tempRes.toInt() != 0 || tempRes != 0.0) {
+                            tempMunis = tempRes
+                            top_ressum.text = tempRes.toString()
+                            tempRes = 0.0
+                        } else {
+                            tempMunis = result_sum.toDouble()
+                            top_ressum.text = "$result_sum -"
+                        }
+
+                        tempSum = 0.0
+                        tempMul = 0.0
+                        tempDiv = 0.0
+
+                        result_sum = ""
+                        stopRuinMyApp = false
                     }
-
-                    tempSum = 0.0
-                    tempMul = 0.0
-                    tempDiv = 0.0
-
-                    result_sum = ""
-                    stopRuinMyApp = false
                 }
             }
             dota -> {
@@ -331,12 +364,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
             zero -> {
                 clickList.random().start()
-                if (!result_sum.isEmpty())
-                    result_sum += "0"
+
+                result_sum += "0"
+
                 result_panel.text = result_sum
             }
 
         }
+    }
+
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+      return true
     }
 
 }
