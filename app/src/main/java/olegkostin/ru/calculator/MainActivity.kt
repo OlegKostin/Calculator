@@ -29,11 +29,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenu
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-var wrapper = ContextThemeWrapper(this, R.style.popup)
+        var wrapper = ContextThemeWrapper(this, R.style.popup)
 
         popUp = PopupMenu(wrapper, findViewById(R.id.result_panel))
         popUp.inflate(R.menu.popup)
-       popUp.setOnMenuItemClickListener(this)
+        popUp.setOnMenuItemClickListener(this)
         val delete = findViewById<View>(R.id.delete)
         delete.setOnClickListener(this)
 
@@ -191,9 +191,9 @@ var wrapper = ContextThemeWrapper(this, R.style.popup)
             mul -> {
                 clickList.random().start()
 
-                    stopRuinMyAppDotaStyle = true
-                    if (stopRuinMyApp) {
-                        try{
+                stopRuinMyAppDotaStyle = true
+                if (stopRuinMyApp) {
+                    try {
                         if (tempRes.toInt() != 0 || tempRes != 0.0) {
                             tempMul = tempRes
                             top_ressum.text = tempRes.toString()
@@ -209,13 +209,13 @@ var wrapper = ContextThemeWrapper(this, R.style.popup)
                         result_sum = ""
                         stopRuinMyApp = false
                     } catch (e: Exception) {
-                    Snackbar.make(
-                        this.findViewById(R.id.coor),
-                        "введите число",
-                        Snackbar.LENGTH_LONG
-                    ).show();
-                }
+                        Snackbar.make(
+                            this.findViewById(R.id.coor),
+                            "введите число",
+                            Snackbar.LENGTH_LONG
+                        ).show();
                     }
+                }
 
             }
 
@@ -223,8 +223,8 @@ var wrapper = ContextThemeWrapper(this, R.style.popup)
 
                 clickList.random().start()
 
-                    if (stopRuinMyApp) {
-                        try{
+                if (stopRuinMyApp) {
+                    try {
                         if (tempRes.toInt() != 0 || tempRes != 0.0) {
                             tempDiv = tempRes
                             top_ressum.text = tempRes.toString()
@@ -239,29 +239,29 @@ var wrapper = ContextThemeWrapper(this, R.style.popup)
 
                         result_sum = ""
                         stopRuinMyApp = false
-                        } catch (e: Exception) {
-                            Snackbar.make(
-                                this.findViewById(R.id.coor),
-                                "введите число",
-                                Snackbar.LENGTH_LONG
-                            ).show();
-                        }
+                    } catch (e: Exception) {
+                        Snackbar.make(
+                            this.findViewById(R.id.coor),
+                            "введите число",
+                            Snackbar.LENGTH_LONG
+                        ).show();
                     }
+                }
 
             }
             plus -> {
                 stopRuinMyAppDotaStyle = true
                 clickList.random().start()
 
-                    if (stopRuinMyApp) {
-                        try {
+                if (stopRuinMyApp) {
+                    try {
                         if (tempRes != 0.0) {
                             tempSum = tempRes
                             top_ressum.text = tempRes.toString()
                             tempRes = 0.0
                         } else {
                             tempSum = result_sum.toDouble()
-                            top_ressum.text =  "$result_sum +"
+                            top_ressum.text = "$result_sum +"
                         }
 
                         tempMunis = 0.0
@@ -270,46 +270,46 @@ var wrapper = ContextThemeWrapper(this, R.style.popup)
 
                         result_sum = ""
                         stopRuinMyApp = false
-                        } catch (e: Exception) {
-                            Snackbar.make(
-                                this.findViewById(R.id.coor),
-                                "введите число",
-                                Snackbar.LENGTH_LONG
-                            ).show();
-                        }
+                    } catch (e: Exception) {
+                        Snackbar.make(
+                            this.findViewById(R.id.coor),
+                            "введите число",
+                            Snackbar.LENGTH_LONG
+                        ).show();
+                    }
                 }
             }
             minus -> {
                 clickList.random().start()
 
-                    if (stopRuinMyApp) {
-                        try {
-                            if (tempRes.toInt() != 0 || tempRes != 0.0) {
+                if (stopRuinMyApp) {
+                    try {
+                        if (tempRes.toInt() != 0 || tempRes != 0.0) {
 
-                                tempMunis = tempRes
+                            tempMunis = tempRes
 
-                                top_ressum.text = tempRes.toString()
-                                tempRes = 0.0
-                            } else {
-                                tempMunis = result_sum.toDouble()
-                                top_ressum.text = "$result_sum -"
-                            }
-
-                            tempSum = 0.0
-                            tempMul = 0.0
-                            tempDiv = 0.0
-
-                            result_sum = ""
-                            stopRuinMyApp = false
-
-                        } catch (e: Exception) {
-                            Snackbar.make(
-                                this.findViewById(R.id.coor),
-                                "введите число",
-                                Snackbar.LENGTH_LONG
-                            ).show();
+                            top_ressum.text = tempRes.toString()
+                            tempRes = 0.0
+                        } else {
+                            tempMunis = result_sum.toDouble()
+                            top_ressum.text = "$result_sum -"
                         }
+
+                        tempSum = 0.0
+                        tempMul = 0.0
+                        tempDiv = 0.0
+
+                        result_sum = ""
+                        stopRuinMyApp = false
+
+                    } catch (e: Exception) {
+                        Snackbar.make(
+                            this.findViewById(R.id.coor),
+                            "введите число",
+                            Snackbar.LENGTH_LONG
+                        ).show();
                     }
+                }
             }
             dota -> {
                 clickList.random().start()
@@ -407,7 +407,7 @@ var wrapper = ContextThemeWrapper(this, R.style.popup)
     }
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {
-      return true
+        return true
     }
 
 }
